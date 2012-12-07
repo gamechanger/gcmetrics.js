@@ -1,0 +1,19 @@
+{
+  "name": "gcmetrics",
+  "version": "0.0.0",
+  "description": "GameChanger Metrics API",
+  "main": "lib/metrics.js",
+  "private": true,
+  "author": "Tom Leach",
+  "dependencies": {
+    "underscore.string": "2.3.x",
+    "node-dogstatsd": "0.0.x",
+    "underscore": "1.4.x",
+    "gcconfig": "git+ssh://git@github.com:gamechanger/gcconfig.js.git"
+  },
+  "devDependencies": {
+    "mocha": "1.7.x",
+    "should": "1.2.x",
+    "jslint": "0.1.x"
+  }
+}
