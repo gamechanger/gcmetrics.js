@@ -8,7 +8,7 @@ GameChanger Metrics API. This node module provides an API for logging applicatio
     ```javascript
         ...
         "dependencies": {
-            "gcconfig": "git+ssh://git@github.com:gamechanger/gcmetrics.js.git"
+            "gcmetrics": "git+ssh://git@github.com:gamechanger/gcmetrics.js.git"
         }
         ...
     ```
