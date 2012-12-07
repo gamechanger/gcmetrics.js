@@ -11,4 +11,10 @@ pids
 logs
 results
 
-npm-debug.log
+*.o
+*.log
+*.a
+.c9revisions
+.DS_Store
+node_modules
+tmp
