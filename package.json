@@ -1,6 +1,6 @@
 {
   "name": "gcmetrics",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "GameChanger Metrics API",
   "main": "lib/metrics.js",
   "private": true,
