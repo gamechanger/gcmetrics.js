@@ -1,66 +1,202 @@
-var dgram = require('dgram'),
-    socket = dgram.createSocket('udp4'),
-    _ = require('underscore'),
+var _ = require('underscore'),
+    StatsD = require('../lib/statsd'),
     config = require('gcconfig');
+    sinon = require('sinon');
 
-socket.bind();
 config.dogstatsd = {
-    port: socket.address().port,
+    port: 1234,
     localhost: 'localhost'
 };
 
+var real = StatsD.create();
+var mockStatsD;
+
+
+StatsD.create = function() {
+    return real;
+};
+    
 var metrics = require('../lib/metrics');
 
 describe('Metric logging', function() {
 
-    afterEach(function() {
-        socket.removeAllListeners('message');
-    });
-
     after(function() {
-        socket.close();
+        delete require.cache[require.resolve('../lib/statsd')];
     });
 
-    var shouldGetMessage = function(str, done) {
-        socket.on('message', function(msg) {
-            if (_.isRegExp(str)) {
-                msg.toString().should.match(str);
-            } else {
-                msg.toString().should.eql(str);
-            }
-            done();
+    beforeEach(function() {
+        mockStatsD = sinon.mock(real);
+    });
+
+
+    describe('timing', function() {
+        it("should send timing info with sample rate and tags as array", function() {
+            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', 50, 0.5, ['test']);
+            metrics.timing('something', 50, 0.5, ['test']);
+            mockStatsD.verify();
         });
-    };
 
-    it("should submit timing info", function(done) {
-        shouldGetMessage('gcmetrics.something:50|ms|#test', done);
-        metrics.timing('something', 50, 1, ['test']);
+        it("should send timing info with tags as array", function() {
+            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', 50, 1, ['test']);
+            metrics.timing('something', 50, ['test']);
+            mockStatsD.verify();
+        });
+
+        it("should send timing info with sample rate and tags as object", function() {
+            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', 50, 0.5, ['foo:bar']);
+            metrics.timing('something', 50, 0.5, {foo: 'bar'});
+            mockStatsD.verify();
+        });
+
+        it("should send timing info with tags as object", function() {
+            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', 50, 1, ['foo:bar']);
+            metrics.timing('something', 50, {foo: 'bar'});
+            mockStatsD.verify();
+        });
     });
 
-    it("should increment", function(done) {
-        shouldGetMessage('gcmetrics.something:1|c|#test', done);
-        metrics.increment('something', 1, ['test']);
+    describe('increment', function() {
+        it("should increment with a sample rate and tag array", function() {
+            mockStatsD.expects('increment').withArgs('gcmetrics.something', 0.5, ['test']);
+            metrics.increment('something', 0.5, ['test']);
+            mockStatsD.verify();
+        });
+        it("should increment with tag array", function() {
+            mockStatsD.expects('increment').withArgs('gcmetrics.something', 1, ['test']);
+            metrics.increment('something', ['test']);
+            mockStatsD.verify();
+        });
+        it("should increment with a sample rate and tag object", function() {
+            mockStatsD.expects('increment').withArgs('gcmetrics.something', 0.5, ['foo:bar']);
+            metrics.increment('something', 0.5, {foo: 'bar'});
+            mockStatsD.verify();
+        });
+        it("should increment with a sample rate and tag array", function() {
+            mockStatsD.expects('increment').withArgs('gcmetrics.something', 1, ['foo:bar']);
+            metrics.increment('something', {foo: 'bar'});
+            mockStatsD.verify();
+        });
     });
 
-    it("should decrement", function(done) {
-        shouldGetMessage('gcmetrics.something:-1|c|#test', done);
-        metrics.decrement('something', 1, ['test']);
+    describe('decrement', function() {
+        it("should decrement with a sample rate and tag array", function() {
+            mockStatsD.expects('decrement').withArgs('gcmetrics.something', 0.5, ['test']);
+            metrics.decrement('something', 0.5, ['test']);
+            mockStatsD.verify();
+        });
+        it("should decrement with tag array", function() {
+            mockStatsD.expects('decrement').withArgs('gcmetrics.something', 1, ['test']);
+            metrics.decrement('something', ['test']);
+            mockStatsD.verify();
+        });
+        it("should decrement with a sample rate and tag object", function() {
+            mockStatsD.expects('decrement').withArgs('gcmetrics.something', 0.5, ['foo:bar']);
+            metrics.decrement('something', 0.5, {foo: 'bar'});
+            mockStatsD.verify();
+        });
+        it("should decrement with a sample rate and tag array", function() {
+            mockStatsD.expects('decrement').withArgs('gcmetrics.something', 1, ['foo:bar']);
+            metrics.decrement('something', {foo: 'bar'});
+            mockStatsD.verify();
+        });
     });
 
-    it("should set a histogram", function(done) {
-        shouldGetMessage('gcmetrics.something:5|h|#test', done);
-        metrics.histogram('something', 5, 1, ['test']);
+    describe('gauge', function() {
+        it("should send gauge info with sample rate and tags as array", function() {
+            mockStatsD.expects('gauge').once().withArgs('gcmetrics.something', 50, 0.5, ['test']);
+            metrics.gauge('something', 50, 0.5, ['test']);
+            mockStatsD.verify();
+        });
+
+        it("should send gauge info with tags as array", function() {
+            mockStatsD.expects('gauge').once().withArgs('gcmetrics.something', 50, 1, ['test']);
+            metrics.gauge('something', 50, ['test']);
+            mockStatsD.verify();
+        });
+
+        it("should send gauge info with sample rate and tags as object", function() {
+            mockStatsD.expects('gauge').once().withArgs('gcmetrics.something', 50, 0.5, ['foo:bar']);
+            metrics.gauge('something', 50, 0.5, {foo: 'bar'});
+            mockStatsD.verify();
+        });
+
+        it("should send gauge info with tags as object", function() {
+            mockStatsD.expects('gauge').once().withArgs('gcmetrics.something', 50, 1, ['foo:bar']);
+            metrics.gauge('something', 50, {foo: 'bar'});
+            mockStatsD.verify();
+        });
     });
 
-    it("should set a gauge", function(done) {
-        shouldGetMessage('gcmetrics.something:5|g|#test', done);
-        metrics.gauge('something', 5, 1, ['test']);
+    describe('histogram', function() {
+        it("should send histogram info with sample rate and tags as array", function() {
+            mockStatsD.expects('histogram').once().withArgs('gcmetrics.something', 50, 0.5, ['test']);
+            metrics.histogram('something', 50, 0.5, ['test']);
+            mockStatsD.verify();
+        });
+
+        it("should send histogram info with tags as array", function() {
+            mockStatsD.expects('histogram').once().withArgs('gcmetrics.something', 50, 1, ['test']);
+            metrics.histogram('something', 50, ['test']);
+            mockStatsD.verify();
+        });
+
+        it("should send histogram info with sample rate and tags as object", function() {
+            mockStatsD.expects('histogram').once().withArgs('gcmetrics.something', 50, 0.5, ['foo:bar']);
+            metrics.histogram('something', 50, 0.5, {foo: 'bar'});
+            mockStatsD.verify();
+        });
+
+        it("should send histogram info with tags as object", function() {
+            mockStatsD.expects('histogram').once().withArgs('gcmetrics.something', 50, 1, ['foo:bar']);
+            metrics.histogram('something', 50, {foo: 'bar'});
+            mockStatsD.verify();
+        });
     });
 
-    it('should time callbacks', function(done) {
-        shouldGetMessage(/gcmetrics\.something\:\d+\|ms\|#some,tags/, done);
-        metrics.timed('something', function(cb) {
-            setTimeout(cb, 10);
-        }, ['some', 'tags']);
+    describe('timed callback', function() {
+        it('should time callbacks with sample rate and tag array', function(done) {
+            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', sinon.match.number, 0.5, ['test']);
+            metrics.timed(function(cb) {
+                setTimeout(function() {
+                    cb('something', 0.5, ['test']);
+                    mockStatsD.verify();
+                    done();
+                }, 10);
+            });
+        });
+
+        it('should time callbacks with tag array', function(done) {
+            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', sinon.match.number, 1, ['test']);
+            metrics.timed(function(cb) {
+                setTimeout(function() {
+                    cb('something', ['test']);
+                    mockStatsD.verify();
+                    done();
+                }, 10);
+            });
+        });
+
+        it('should time callbacks with sample rate and tag object', function(done) {
+            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', sinon.match.number, 0.5, ['foo:bar']);
+            metrics.timed(function(cb) {
+                setTimeout(function() {
+                    cb('something', 0.5, {foo:'bar'});
+                    mockStatsD.verify();
+                    done();
+                }, 10);
+            });
+        });
+
+        it('should time callbacks with tag object', function(done) {
+            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', sinon.match.number, 1, ['foo:bar']);
+            metrics.timed(function(cb) {
+                setTimeout(function() {
+                    cb('something', {foo:'bar'});
+                    mockStatsD.verify();
+                    done();
+                }, 10);
+            });
+        });
     });
+
 });
