@@ -31,25 +31,25 @@ describe('Metric logging', function() {
 
     describe('timing', function() {
         it("should send timing info with sample rate and tags as array", function() {
-            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', 50, 0.5, ['test']);
+            mockStatsD.expects('timing').once().withArgs('@gamechanger/metrics.something', 50, 0.5, ['test']);
             metrics.timing('something', 50, 0.5, ['test']);
             mockStatsD.verify();
         });
 
         it("should send timing info with tags as array", function() {
-            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', 50, 1, ['test']);
+            mockStatsD.expects('timing').once().withArgs('@gamechanger/metrics.something', 50, 1, ['test']);
             metrics.timing('something', 50, ['test']);
             mockStatsD.verify();
         });
 
         it("should send timing info with sample rate and tags as object", function() {
-            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', 50, 0.5, ['foo:bar']);
+            mockStatsD.expects('timing').once().withArgs('@gamechanger/metrics.something', 50, 0.5, ['foo:bar']);
             metrics.timing('something', 50, 0.5, {foo: 'bar'});
             mockStatsD.verify();
         });
 
         it("should send timing info with tags as object", function() {
-            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', 50, 1, ['foo:bar']);
+            mockStatsD.expects('timing').once().withArgs('@gamechanger/metrics.something', 50, 1, ['foo:bar']);
             metrics.timing('something', 50, {foo: 'bar'});
             mockStatsD.verify();
         });
@@ -57,22 +57,22 @@ describe('Metric logging', function() {
 
     describe('increment', function() {
         it("should increment with a sample rate and tag array", function() {
-            mockStatsD.expects('increment').withArgs('gcmetrics.something', 0.5, ['test']);
+            mockStatsD.expects('increment').withArgs('@gamechanger/metrics.something', 0.5, ['test']);
             metrics.increment('something', 0.5, ['test']);
             mockStatsD.verify();
         });
         it("should increment with tag array", function() {
-            mockStatsD.expects('increment').withArgs('gcmetrics.something', 1, ['test']);
+            mockStatsD.expects('increment').withArgs('@gamechanger/metrics.something', 1, ['test']);
             metrics.increment('something', ['test']);
             mockStatsD.verify();
         });
         it("should increment with a sample rate and tag object", function() {
-            mockStatsD.expects('increment').withArgs('gcmetrics.something', 0.5, ['foo:bar']);
+            mockStatsD.expects('increment').withArgs('@gamechanger/metrics.something', 0.5, ['foo:bar']);
             metrics.increment('something', 0.5, {foo: 'bar'});
             mockStatsD.verify();
         });
         it("should increment with a sample rate and tag array", function() {
-            mockStatsD.expects('increment').withArgs('gcmetrics.something', 1, ['foo:bar']);
+            mockStatsD.expects('increment').withArgs('@gamechanger/metrics.something', 1, ['foo:bar']);
             metrics.increment('something', {foo: 'bar'});
             mockStatsD.verify();
         });
@@ -80,22 +80,22 @@ describe('Metric logging', function() {
 
     describe('decrement', function() {
         it("should decrement with a sample rate and tag array", function() {
-            mockStatsD.expects('decrement').withArgs('gcmetrics.something', 0.5, ['test']);
+            mockStatsD.expects('decrement').withArgs('@gamechanger/metrics.something', 0.5, ['test']);
             metrics.decrement('something', 0.5, ['test']);
             mockStatsD.verify();
         });
         it("should decrement with tag array", function() {
-            mockStatsD.expects('decrement').withArgs('gcmetrics.something', 1, ['test']);
+            mockStatsD.expects('decrement').withArgs('@gamechanger/metrics.something', 1, ['test']);
             metrics.decrement('something', ['test']);
             mockStatsD.verify();
         });
         it("should decrement with a sample rate and tag object", function() {
-            mockStatsD.expects('decrement').withArgs('gcmetrics.something', 0.5, ['foo:bar']);
+            mockStatsD.expects('decrement').withArgs('@gamechanger/metrics.something', 0.5, ['foo:bar']);
             metrics.decrement('something', 0.5, {foo: 'bar'});
             mockStatsD.verify();
         });
         it("should decrement with a sample rate and tag array", function() {
-            mockStatsD.expects('decrement').withArgs('gcmetrics.something', 1, ['foo:bar']);
+            mockStatsD.expects('decrement').withArgs('@gamechanger/metrics.something', 1, ['foo:bar']);
             metrics.decrement('something', {foo: 'bar'});
             mockStatsD.verify();
         });
@@ -103,25 +103,25 @@ describe('Metric logging', function() {
 
     describe('gauge', function() {
         it("should send gauge info with sample rate and tags as array", function() {
-            mockStatsD.expects('gauge').once().withArgs('gcmetrics.something', 50, 0.5, ['test']);
+            mockStatsD.expects('gauge').once().withArgs('@gamechanger/metrics.something', 50, 0.5, ['test']);
             metrics.gauge('something', 50, 0.5, ['test']);
             mockStatsD.verify();
         });
 
         it("should send gauge info with tags as array", function() {
-            mockStatsD.expects('gauge').once().withArgs('gcmetrics.something', 50, 1, ['test']);
+            mockStatsD.expects('gauge').once().withArgs('@gamechanger/metrics.something', 50, 1, ['test']);
             metrics.gauge('something', 50, ['test']);
             mockStatsD.verify();
         });
 
         it("should send gauge info with sample rate and tags as object", function() {
-            mockStatsD.expects('gauge').once().withArgs('gcmetrics.something', 50, 0.5, ['foo:bar']);
+            mockStatsD.expects('gauge').once().withArgs('@gamechanger/metrics.something', 50, 0.5, ['foo:bar']);
             metrics.gauge('something', 50, 0.5, {foo: 'bar'});
             mockStatsD.verify();
         });
 
         it("should send gauge info with tags as object", function() {
-            mockStatsD.expects('gauge').once().withArgs('gcmetrics.something', 50, 1, ['foo:bar']);
+            mockStatsD.expects('gauge').once().withArgs('@gamechanger/metrics.something', 50, 1, ['foo:bar']);
             metrics.gauge('something', 50, {foo: 'bar'});
             mockStatsD.verify();
         });
@@ -129,25 +129,25 @@ describe('Metric logging', function() {
 
     describe('histogram', function() {
         it("should send histogram info with sample rate and tags as array", function() {
-            mockStatsD.expects('histogram').once().withArgs('gcmetrics.something', 50, 0.5, ['test']);
+            mockStatsD.expects('histogram').once().withArgs('@gamechanger/metrics.something', 50, 0.5, ['test']);
             metrics.histogram('something', 50, 0.5, ['test']);
             mockStatsD.verify();
         });
 
         it("should send histogram info with tags as array", function() {
-            mockStatsD.expects('histogram').once().withArgs('gcmetrics.something', 50, 1, ['test']);
+            mockStatsD.expects('histogram').once().withArgs('@gamechanger/metrics.something', 50, 1, ['test']);
             metrics.histogram('something', 50, ['test']);
             mockStatsD.verify();
         });
 
         it("should send histogram info with sample rate and tags as object", function() {
-            mockStatsD.expects('histogram').once().withArgs('gcmetrics.something', 50, 0.5, ['foo:bar']);
+            mockStatsD.expects('histogram').once().withArgs('@gamechanger/metrics.something', 50, 0.5, ['foo:bar']);
             metrics.histogram('something', 50, 0.5, {foo: 'bar'});
             mockStatsD.verify();
         });
 
         it("should send histogram info with tags as object", function() {
-            mockStatsD.expects('histogram').once().withArgs('gcmetrics.something', 50, 1, ['foo:bar']);
+            mockStatsD.expects('histogram').once().withArgs('@gamechanger/metrics.something', 50, 1, ['foo:bar']);
             metrics.histogram('something', 50, {foo: 'bar'});
             mockStatsD.verify();
         });
@@ -155,7 +155,7 @@ describe('Metric logging', function() {
 
     describe('timed callback', function() {
         it('should time callbacks with sample rate and tag array', function(done) {
-            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', sinon.match.number, 0.5, ['test']);
+            mockStatsD.expects('timing').once().withArgs('@gamechanger/metrics.something', sinon.match.number, 0.5, ['test']);
             metrics.timed(function(cb) {
                 setTimeout(function() {
                     cb('something', 0.5, ['test']);
@@ -166,7 +166,7 @@ describe('Metric logging', function() {
         });
 
         it('should time callbacks with tag array', function(done) {
-            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', sinon.match.number, 1, ['test']);
+            mockStatsD.expects('timing').once().withArgs('@gamechanger/metrics.something', sinon.match.number, 1, ['test']);
             metrics.timed(function(cb) {
                 setTimeout(function() {
                     cb('something', ['test']);
@@ -177,7 +177,7 @@ describe('Metric logging', function() {
         });
 
         it('should time callbacks with sample rate and tag object', function(done) {
-            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', sinon.match.number, 0.5, ['foo:bar']);
+            mockStatsD.expects('timing').once().withArgs('@gamechanger/metrics.something', sinon.match.number, 0.5, ['foo:bar']);
             metrics.timed(function(cb) {
                 setTimeout(function() {
                     cb('something', 0.5, {foo:'bar'});
@@ -188,7 +188,7 @@ describe('Metric logging', function() {
         });
 
         it('should time callbacks with tag object', function(done) {
-            mockStatsD.expects('timing').once().withArgs('gcmetrics.something', sinon.match.number, 1, ['foo:bar']);
+            mockStatsD.expects('timing').once().withArgs('@gamechanger/metrics.something', sinon.match.number, 1, ['foo:bar']);
             metrics.timed(function(cb) {
                 setTimeout(function() {
                     cb('something', {foo:'bar'});
