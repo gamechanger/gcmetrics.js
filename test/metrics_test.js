@@ -1,6 +1,6 @@
 var _ = require('underscore'),
     StatsD = require('../lib/statsd'),
-    config = require('gcconfig');
+    config = require('@gamechanger/config');
     sinon = require('sinon');
 
 config.dogstatsd = {
@@ -15,7 +15,7 @@ var mockStatsD;
 StatsD.create = function() {
     return real;
 };
-    
+
 var metrics = require('../lib/metrics');
 
 describe('Metric logging', function() {

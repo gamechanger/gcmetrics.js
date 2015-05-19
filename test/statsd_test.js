@@ -1,5 +1,5 @@
 var StatsD = require('../lib/statsd'),
-    config = require('gcconfig');
+    config = require('@gamechanger/config');
 
 config.dogstatsd = {
     port: 1234,
@@ -12,5 +12,5 @@ describe("Statsd loader", function() {
         instance.host.should.eql('localhost');
         instance.port.should.eql(1234);
     });
-    
+
 });

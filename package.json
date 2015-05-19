@@ -6,10 +6,10 @@
   "private": true,
   "author": "Tom Leach",
   "dependencies": {
-    "underscore.string": "2.3.x",
+    "@gamechanger/config": "^0.1.3",
     "node-dogstatsd": "0.0.x",
     "underscore": "1.4.x",
-    "gcconfig": "git+ssh://git@github.com:gamechanger/gcconfig.js.git#0.1.2-actual"
+    "underscore.string": "2.3.x"
   },
   "devDependencies": {
     "mocha": "1.7.x",
