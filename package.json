@@ -1,9 +1,8 @@
 {
-  "name": "gcmetrics",
+  "name": "@gamechanger/metrics",
   "version": "0.2.2",
   "description": "GameChanger Metrics API",
   "main": "lib/metrics.js",
-  "private": true,
   "author": "Tom Leach",
   "dependencies": {
     "@gamechanger/config": "^0.1.3",
