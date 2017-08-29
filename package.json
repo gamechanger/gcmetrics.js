@@ -6,7 +6,6 @@
   "types": "lib/metrics.d.ts",
   "author": "Tom Leach",
   "dependencies": {
-    "@gamechanger/config": "git+ssh://git@github.com:gamechanger/gcconfig.js.git#0.1.3",
     "node-dogstatsd": "0.0.x",
     "underscore": "1.4.x",
     "underscore.string": "2.3.x",
