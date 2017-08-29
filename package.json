@@ -3,12 +3,14 @@
   "version": "0.2.3",
   "description": "GameChanger Metrics API",
   "main": "lib/metrics.js",
+  "types": "lib/metrics.d.ts",
   "author": "Tom Leach",
   "dependencies": {
-    "@gamechanger/config": "^0.1.3",
+    "@gamechanger/config": "git+ssh://git@github.com:gamechanger/gcconfig.js.git#0.1.3",
     "node-dogstatsd": "0.0.x",
     "underscore": "1.4.x",
-    "underscore.string": "2.3.x"
+    "underscore.string": "2.3.x",
+    "@types/node-dogstatsd": "0.0.2"
   },
   "devDependencies": {
     "mocha": "1.7.x",
