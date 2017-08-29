@@ -1,6 +1,6 @@
 # gcmetrics.js
 
-GameChanger Metrics API. This node module provides an API for logging application metrics to the infrastructure's monitoring platform. 
+GameChanger Metrics API. This node module provides an API for logging application metrics to the infrastructure's monitoring platform.
 
 ## How to use
 1. Include gcmetrics.js in your app project by adding a line to your package.json file:
@@ -14,26 +14,17 @@ GameChanger Metrics API. This node module provides an API for logging applicatio
     ```
 
 2. Run `npm install` to install the package into your app's `node_modules`.
-3. Add appropriate config for dogstatsd into your application config, e.g.:
 
-    ```javascript
-    {
-        "dogstatsd": {
-            "host": "localhost",
-            "port": 8135
-        }
-    }
-    ```
-
-4. Within your app, require `gcmetrics` and use this object to log metrics:
+3. Within your app, require `gcmetrics` and use this object to log metrics:
 
     ```javascript
     var metrics = require('gcmetrics');
-    
+
+    metrics.registerDogStatsD(host, port); // run this once, before emitting any metrics
     metrics.increment('requests');
     ```
 
-5. That's it. 
+4. That's it.
 
 
 ## Notes
@@ -50,6 +41,6 @@ GameChanger Metrics API. This node module provides an API for logging applicatio
 
 ## Development
 
-To install gcmetrics dependencies run `npm install`. 
+To install gcmetrics dependencies run `npm install`.
 
 To run test run `make test`.
