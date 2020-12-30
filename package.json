@@ -4,17 +4,22 @@
   "description": "GameChanger Metrics API",
   "main": "lib/metrics.js",
   "types": "lib/metrics.d.ts",
-  "author": "Tom Leach",
+  "scripts": {
+    "test": "yarn mocha",
+    "lint": "yarn eslint . --fix"
+  },
   "dependencies": {
     "node-dogstatsd": "0.0.x",
     "underscore": "1.4.x",
-    "underscore.string": "3.3.x",
-    "@types/node-dogstatsd": "0.0.2"
+    "underscore.string": "3.3.x"
   },
   "devDependencies": {
-    "mocha": "1.7.x",
+    "@types/node-dogstatsd": "0.0.2",
+    "eslint": "^7.16.0",
+    "eslint-config-google": "^0.14.0",
+    "jslint": "0.1.x",
+    "mocha": "^8.2.1",
     "should": "1.2.x",
-    "sinon": "1.5.x",
-    "jslint": "0.1.x"
+    "sinon": "^9.2.2"
   }
 }
