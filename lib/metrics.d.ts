@@ -1,6 +1,6 @@
 type Tags = string[] | { [key: string]: string };
 
-export declare function registerDogStatsD(host: string, port: number): void;
+export declare function registerDogStatsD(host: string, port: number, prefix?: string): void;
 
 declare function convertTagsIfRequired(tags: Tags): string[];
 
