@@ -1,3 +1,7 @@
-.git*
+out/
 test/
-Makefile
+benchmarking/
+debugger/
+**/*[^.d$].ts
+.*
+tags

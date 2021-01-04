@@ -1,0 +1,46 @@
+stages:
+  - install
+  - test
+  - publish
+
+install deps:
+  stage: install
+  image: docker.gamechanger.io/node:12.18.3
+  script:
+    - yarn
+  artifacts:
+    name: 'setup-$CI_COMMIT_REF_NAME'
+    expire_in: 2 hour
+    paths:
+      - ./node_modules/
+      - ./yarn.lock
+  only:
+    refs:
+      - branches
+
+lint:
+  stage: test
+  image: docker.gamechanger.io/node:12.18.3
+  script:
+    - yarn lint
+  only:
+    refs:
+      - branches
+
+test:
+  stage: test
+  image: docker.gamechanger.io/node:12.18.3
+  script:
+    - yarn test
+  only:
+    refs:
+      - branches
+
+publish to npm:
+  stage: publish
+  image: docker.gamechanger.io/node:12.18.3
+  script:
+    - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+    - npm publish
+  only:
+    - /^v\d+\.\d+\.\d+$/
