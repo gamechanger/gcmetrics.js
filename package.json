@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "node-dogstatsd": "0.0.x",
-    "underscore": "1.4.x",
+    "underscore": "1.12.x",
     "underscore.string": "3.3.x"
   },
   "devDependencies": {
