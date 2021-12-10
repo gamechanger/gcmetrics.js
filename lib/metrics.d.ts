@@ -14,4 +14,4 @@ export declare function gauge(stat: string, value: number, sampleRate?: number, 
 
 export declare function histogram(stat: string, value: number, sampleRate?: number, tags?: Tags): void;
 
-export declare function timed(fn: () => void): void;
+export declare function timed(fn: (stat: string, sampleRate?: number, tags?: Tags) => void): void;
