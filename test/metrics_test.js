@@ -71,6 +71,33 @@ describe('Metric logging', () => {
     });
   });
 
+  describe('incrementBy', () => {
+    it('should increment with a value and tag array', () => {
+      mockStatsD.expects('incrementBy')
+          .withArgs('customPrefix.something', 10, ['test']);
+      metrics.incrementBy('something', 10, ['test']);
+      mockStatsD.verify();
+    });
+    it('should increment with tag array', () => {
+      mockStatsD.expects('incrementBy')
+          .withArgs('customPrefix.something', 1, ['test']);
+      metrics.incrementBy('something', ['test']);
+      mockStatsD.verify();
+    });
+    it('should increment with a value and tag object', () => {
+      mockStatsD.expects('incrementBy')
+          .withArgs('customPrefix.something', 5, ['foo:bar']);
+      metrics.incrementBy('something', 5, {foo: 'bar'});
+      mockStatsD.verify();
+    });
+    it('should increment with tag array', () => {
+      mockStatsD.expects('incrementBy')
+          .withArgs('customPrefix.something', 1, ['foo:bar']);
+      metrics.incrementBy('something', {foo: 'bar'});
+      mockStatsD.verify();
+    });
+  });
+
   describe('decrement', () => {
     it('should decrement with a sample rate and tag array', () => {
       mockStatsD.expects('decrement')
@@ -94,6 +121,33 @@ describe('Metric logging', () => {
       mockStatsD.expects('decrement')
           .withArgs('customPrefix.something', 1, ['foo:bar']);
       metrics.decrement('something', {foo: 'bar'});
+      mockStatsD.verify();
+    });
+  });
+
+  describe('decrementBy', () => {
+    it('should decrement with a value and tag array', () => {
+      mockStatsD.expects('decrementBy')
+          .withArgs('customPrefix.something', 10, ['test']);
+      metrics.decrementBy('something', 10, ['test']);
+      mockStatsD.verify();
+    });
+    it('should decrement with tag array', () => {
+      mockStatsD.expects('decrementBy')
+          .withArgs('customPrefix.something', 1, ['test']);
+      metrics.decrementBy('something', ['test']);
+      mockStatsD.verify();
+    });
+    it('should decrement with a value and tag object', () => {
+      mockStatsD.expects('decrementBy')
+          .withArgs('customPrefix.something', 5, ['foo:bar']);
+      metrics.decrementBy('something', 5, {foo: 'bar'});
+      mockStatsD.verify();
+    });
+    it('should decrement with tag array', () => {
+      mockStatsD.expects('decrementBy')
+          .withArgs('customPrefix.something', 1, ['foo:bar']);
+      metrics.decrementBy('something', {foo: 'bar'});
       mockStatsD.verify();
     });
   });
