@@ -1,6 +1,6 @@
 {
   "name": "@gamechanger/metrics",
-  "version": "0.3.8",
+  "version": "0.3.9",
   "description": "GameChanger Metrics API",
   "main": "lib/metrics.js",
   "types": "lib/metrics.d.ts",
