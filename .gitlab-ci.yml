@@ -5,7 +5,7 @@ stages:
 
 install deps:
   stage: install
-  image: docker.gamechanger.io/node:12.18.3
+  image: docker.gamechanger.io/node:22.14.0
   script:
     - yarn
   artifacts:
@@ -20,7 +20,7 @@ install deps:
 
 lint:
   stage: test
-  image: docker.gamechanger.io/node:12.18.3
+  image: docker.gamechanger.io/node:22.14.0
   script:
     - yarn lint
   only:
@@ -29,7 +29,7 @@ lint:
 
 test:
   stage: test
-  image: docker.gamechanger.io/node:12.18.3
+  image: docker.gamechanger.io/node:22.14.0
   script:
     - yarn test
   only:
@@ -38,7 +38,7 @@ test:
 
 publish to npm:
   stage: publish
-  image: docker.gamechanger.io/node:12.18.3
+  image: docker.gamechanger.io/node:22.14.0
   script:
     - echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
     - npm publish
